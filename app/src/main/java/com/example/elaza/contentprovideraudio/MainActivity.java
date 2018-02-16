@@ -8,19 +8,24 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
+    TextView texto;
+    Button but;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button but = (Button) findViewById(R.id.buttonret);
+        but = (Button) findViewById(R.id.buttonret);
+        texto = (TextView) findViewById(R.id.contactos);
         but.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(MainActivity.this, "pulsado boton", Toast.LENGTH_SHORT).show();
                 String[] projection = new String[] {
                         MediaStore.Audio.AudioColumns.ALBUM,
                         MediaStore.Audio.AudioColumns.TITLE };
@@ -43,6 +48,8 @@ public class MainActivity extends Activity {
                     // Extraemos el nombre del album.
                     String album = cursor.getString(albumIdx);
                     result[cursor.getPosition()] = title + " (" + album + ")";
+                    //en cada interación añadimos el texto al textview
+                    texto.append(title + " (" + album + ")\n");
                 }
                 // cerramos el Cursor.
                 cursor.close();
